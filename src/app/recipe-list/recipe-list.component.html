@@ -1,0 +1,10 @@
+<recipe></recipe>
+<recipe-detail></recipe-detail>
+
+<div class="row">
+    <div *ngFor="let recipe of recipeList" class="col-md-12">
+        <h3> {{ recipe.name }} </h3><br/>
+        <h4> {{ recipe.description }} </h4><br/>
+        <img src="{{recipe.imageURL}}" class="img-fluid rounded" height="500" width="500"/>
+    </div>
+</div>
