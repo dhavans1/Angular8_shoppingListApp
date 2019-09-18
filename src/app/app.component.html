@@ -1,10 +1,10 @@
 <!-- App Header -->
-<app-header></app-header>
+<app-header (menuClickEvent)="toggleView($event)" ></app-header>
 
 <br/>
 <!-- Recipe List -->
-<recipe-list></recipe-list>
+<recipe-list *ngIf="showRecipeList"></recipe-list>
 
 <br />
 <!-- Shopping List -->
-<shop-list></shop-list>
+<shop-list *ngIf="!showRecipeList"></shop-list>

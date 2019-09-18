@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'shoppingListApp';
+
+  showRecipeList: boolean;
+
+  constructor(){
+    this.showRecipeList = true;
+  }
+
+  toggleView(event: {menuItemClicked: string}){
+    event.menuItemClicked == 'recipeList' ? this.showRecipeList = true : this.showRecipeList = false;
+  }
 }
