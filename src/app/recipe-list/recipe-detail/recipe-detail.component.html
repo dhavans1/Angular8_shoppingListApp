@@ -1,9 +1,10 @@
-<p>recipe-detail works!</p>
-
 <!-- Recipe Manage DDL -->
 <div class="row">
-    <div class="col-xs-12">
-        <div class="dropdown">
+    <div class="col-xs-8">
+        <h3>{{ recipeDetail.name }}</h3>
+    </div>
+    <div class="col-xs-4">
+        <div class="dropdown" style="text-align: right">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownmenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Manage <span class="caret"></span>
             </button>
@@ -21,12 +22,8 @@
 <!-- Information -->
 <div class="row">
     <div class="col-xs-12">
-        <h3>Recipe Name</h3>
-    </div>
-    <br />
-    <div>
         <h4>
-            Recipe Description
+            {{ recipeDetail.description }}
         </h4>
     </div>
 </div>

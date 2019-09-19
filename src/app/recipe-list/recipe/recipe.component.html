@@ -1,1 +1,13 @@
-<p>recipe works!</p>
+<div class="row" (click)="onrecipeSelect(recipe.UID)">
+    <div class="col-xs-12">
+        <a href="#" class="list-group-item clearfix">
+            <div class="pull-left">
+                <h4 class="list-group-item-heading"> {{ recipe.name }} </h4>
+                <h5 class="list-group-item-heading"> {{ recipe.description }} </h5>
+            </div>
+            <div class="pull-right">
+                <img src="{{recipe.imageURL}}" alt="" style="height:100px;border-radius: 50%; border: 1px blanchedalmond" class="image-responsive"/>
+            </div>
+        </a>
+    </div>
+</div>

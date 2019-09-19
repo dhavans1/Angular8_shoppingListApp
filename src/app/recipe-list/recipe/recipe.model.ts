@@ -9,5 +9,6 @@ export class recipe{
         this.description = desc;
         this.imageURL = imgURL;
         this.UID = recipeList.length+1;
+        console.log(recipeList, recipeList.length);
     }
 }
