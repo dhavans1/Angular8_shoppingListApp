@@ -1,31 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { recipe } from './recipe/recipe.model';
+import { recipeService } from './recipe/recipe.service';
 
 @Component({
     selector: 'recipe-list',
     templateUrl: './recipe-list.component.html',
-    styleUrls: ['./recipe-list.component.css']
+    styleUrls: ['./recipe-list.component.css'],
+    providers: [recipeService]
 })
 
-export class recipeListComponent{
-    recipeList: recipe[] = [];
-    // Recipe: recipe;
+export class recipeListComponent implements OnInit{
+    recipeList: recipe[];
+    
     selectedRecipe: recipe;
 
-    constructor(){
-        this.recipeList.push(new recipe("Puliogare", "Tamarind Rice", "https://eastern.in/wp-content/uploads/2017/10/Puliogare-with-Instant-Puliogare-Mix-500x500.jpg", this.recipeList));
-        this.recipeList.push(new recipe("Chitranna", "Lemon Rice", "https://www.indianhealthyrecipes.com/wp-content/uploads/2018/06/lemon-rice-recipe.jpg", this.recipeList));
-        this.recipeList.push(new recipe("Bisi Bele Bath", "Lentil Masala Rice", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Bisi_Bele_Bath_%28Bisibelebath%29.JPG/1200px-Bisi_Bele_Bath_%28Bisibelebath%29.JPG", this.recipeList))
+    constructor( private recipeServiceInstance: recipeService ){
 
-        // this.Recipe = new recipe("Puliogare", "Tamarind Rice", "https://eastern.in/wp-content/uploads/2017/10/Puliogare-with-Instant-Puliogare-Mix-500x500.jpg", this.recipeList)
-
-        // this.selectedRecipe = this.recipeList[0];
     }
 
-    refreshRecipeDetails(recipeInfo: {recipeID: number}){
-        this.selectedRecipe = this.recipeList.find(
-            (recipe) => {
-                return recipe.UID == recipeInfo.recipeID
-            });
+    ngOnInit(){
+        this.recipeList = this.recipeServiceInstance.getRecipes();
+        
+        //Observe/Listen to recipe selected event emitter 
+        this.recipeServiceInstance.recipeSelectEventEmitter.subscribe(
+            (recipeInfo) =>{
+                this.selectedRecipe = this.recipeList.find(
+                    (recipe) => {
+                        return recipe.UID == recipeInfo.recipeID
+                    });
+            }
+        );
     }
+
+ 
 }

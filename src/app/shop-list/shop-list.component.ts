@@ -1,38 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ingredient } from '../shared/ingredient.model';
+import { ShopListService } from './shop-list.service';
 
 @Component({
     selector: 'shop-list',
     templateUrl: './shop-list.component.html',
-    styleUrls: ['./shop-list.component.css']
+    styleUrls: ['./shop-list.component.css'],
+    providers: []
 })
 
-export class shopListComponent{
-    ingredientList: ingredient[] = [];
+export class shopListComponent implements OnInit{
+    ingredientList: ingredient[];
+    
+    constructor( private shoplistServiceInstance: ShopListService ){}
 
-    constructor(){
-        this.ingredientList.push(new ingredient(this.ingredientList.length, "Rice", "KG", 0.5, true));
-        this.ingredientList.push(new ingredient(this.ingredientList.length, "Peanuts", "KG", 0.1, true));
-        this.ingredientList.push(new ingredient(this.ingredientList.length, "Onions", "", 2, true));
-    }
+    ngOnInit(){
+        this.ingredientList = this.shoplistServiceInstance.getIngredients();
 
-    addShoppingItem(item: {itemName: string, itemQuantity: number}){
-        //check if item exists
-        let existingItem = this.ingredientList.find(
-            (ingredient) => {
-                return ingredient.name.toLowerCase() === item.itemName.toLowerCase();
+        //Observe/Subscribe/Listen to add event 
+        this.shoplistServiceInstance.addEvent.subscribe(
+            (ingredientList) => {
+                this.ingredientList = ingredientList;
             }
         );
-
-        if(existingItem){
-            //get index
-            let i = this.ingredientList.indexOf(existingItem);
-            this.ingredientList[i].quantity += +item.itemQuantity;
-        }
-        else{
-            //add new item
-            this.ingredientList.push(new ingredient(this.ingredientList.length, item.itemName, "", item.itemQuantity, true));
-        }
     }
 }
 
