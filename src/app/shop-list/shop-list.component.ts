@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ingredient } from '../shared/ingredient.model';
 import { ShopListService } from './shop-list.service';
+import { CanDeactivateGaurd } from '../app-header/can-deactivate-gaurd.service';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'shop-list',
@@ -9,7 +11,7 @@ import { ShopListService } from './shop-list.service';
     providers: []
 })
 
-export class shopListComponent implements OnInit{
+export class shopListComponent implements OnInit, CanDeactivateGaurd{
     ingredientList: ingredient[];
     
     constructor( private shoplistServiceInstance: ShopListService ){}
@@ -23,6 +25,15 @@ export class shopListComponent implements OnInit{
                 this.ingredientList = ingredientList;
             }
         );
+    }
+
+    canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+        //logic to check if shop-edit form is changed and not saved - TO BE MOVED TO SHOP-LIST-EDIT COMPONENT
+        if ( window.confirm('Do you want to exit?') ) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 

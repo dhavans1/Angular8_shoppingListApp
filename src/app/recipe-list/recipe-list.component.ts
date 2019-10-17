@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { recipe } from './recipe/recipe.model';
 import { recipeService } from './recipe/recipe.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'recipe-list',
@@ -11,26 +12,16 @@ import { recipeService } from './recipe/recipe.service';
 
 export class recipeListComponent implements OnInit{
     recipeList: recipe[];
-    
-    selectedRecipe: recipe;
 
-    constructor( private recipeServiceInstance: recipeService ){
+    constructor( private recipeServiceInstance: recipeService, private router: Router, private activeRoute: ActivatedRoute) {
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
         this.recipeList = this.recipeServiceInstance.getRecipes();
-        
-        //Observe/Listen to recipe selected event emitter 
-        this.recipeServiceInstance.recipeSelectEventEmitter.subscribe(
-            (recipeInfo) =>{
-                this.selectedRecipe = this.recipeList.find(
-                    (recipe) => {
-                        return recipe.UID == recipeInfo.recipeID
-                    });
-            }
-        );
     }
 
- 
+    openRecipeEditor(){
+        this.router.navigate(['new'], { relativeTo: this.activeRoute });
+    }
 }

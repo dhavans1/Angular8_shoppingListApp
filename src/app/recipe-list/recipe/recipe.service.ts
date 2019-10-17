@@ -5,8 +5,9 @@ import { ingredient } from 'src/app/shared/ingredient.model';
 @Injectable()
 export class recipeService{
     recipeList: recipe[] = [];
+    @Output() recipeSelectEventEmitter = new EventEmitter<{val: boolean}>();
     
-   @Output() recipeSelectEventEmitter = new EventEmitter<{recipeID: number}>();
+  //  @Output() recipeSelectEventEmitter = new EventEmitter<{recipeID: number}>();
 
     constructor(){
         this.recipeList.push(new recipe("Puliogare", "Tamarind Rice", "https://eastern.in/wp-content/uploads/2017/10/Puliogare-with-Instant-Puliogare-Mix-500x500.jpg", this.recipeList, [new ingredient(101, "Rice", "KG", 1.5, true), new ingredient(102, "Peanuts", "KG", 0.5, true), new ingredient(103, "Tamarind", "KG", 0.5, true)]));
@@ -14,7 +15,23 @@ export class recipeService{
         this.recipeList.push(new recipe("Bisi Bele Bath", "Lentil Masala Rice", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Bisi_Bele_Bath_%28Bisibelebath%29.JPG/1200px-Bisi_Bele_Bath_%28Bisibelebath%29.JPG", this.recipeList, [new ingredient(301, "Rice", "KG", 3.5, true), new ingredient(302, "Potatoes", "KG", 0.5, true), new ingredient(303, "Lentil", "KG", 0.5, true)]))
     }
 
-    getRecipes(){
+    getRecipes() {
       return this.recipeList.slice();
+    }
+
+    getRecipe( UID: number ): recipe {
+      return this.recipeList.find(
+                    // tslint:disable-next-line: no-shadowed-variable
+                    (recipe) => {
+                        return recipe.UID === UID;
+                    });
+    }
+
+    deleteRecipe( UID: number ) {
+      this.recipeList = this.recipeList.filter(
+        (item: recipe) => {
+          return item.UID !== UID;
+        }
+      );
     }
 }

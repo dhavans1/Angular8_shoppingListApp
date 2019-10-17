@@ -1,10 +1,12 @@
 <!-- App Header -->
-<app-header (menuClickEvent)="toggleView($event)" ></app-header>
+<app-header></app-header>
 
 <br/>
 <!-- Recipe List -->
-<recipe-list *ngIf="showRecipeList"></recipe-list>
+<!-- <recipe-list *ngIf="showRecipeList"></recipe-list>
 
-<br />
+<br /> -->
 <!-- Shopping List -->
-<shop-list *ngIf="!showRecipeList"></shop-list>
+<!-- </shop-list *ngIf="!showRecipeList"></shop-list>  -->
+
+<router-outlet></router-outlet>

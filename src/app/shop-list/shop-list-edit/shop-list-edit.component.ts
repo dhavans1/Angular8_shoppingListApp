@@ -8,10 +8,11 @@ import { ShopListService } from '../shop-list.service';
 })
 
 export class shopListEditComponent{
+    isChanged: boolean = false;
     @ViewChild('itemNameInput', {static: false}) itemName: ElementRef;
     @ViewChild('itemQuantityInput', {static: false}) itemQuantity: ElementRef;
 
-    constructor( private shoplistServiceInstance: ShopListService ){}
+    constructor( private shoplistServiceInstance: ShopListService ) {}
 
     addItem(){
         let name = this.itemName.nativeElement.value;
