@@ -19,7 +19,8 @@ const appRoutes: Routes = [
         children: [
             { path: '', component: RecipeEmptyComponent },
             { path: 'new', component: RecipeEditComponent },
-            { path: ':UID', component: recipeDetailComponent }
+            { path: ':UID', component: recipeDetailComponent },
+            { path: ':UID/edit', component: RecipeEditComponent }
     ]},
     { path: 'shopping-list', component: shopListComponent, canActivate: [AuthGaurdService], canDeactivate: [CanDeactivateGaurd] },
     { path: '**', component: ErrorPageComponent, data: { message: 'Page Not Found!' } }

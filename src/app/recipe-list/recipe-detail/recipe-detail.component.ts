@@ -4,7 +4,6 @@ import { ingredient } from 'src/app/shared/ingredient.model';
 import { ShopListService } from 'src/app/shop-list/shop-list.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { recipeService } from '../recipe/recipe.service';
-import { recipeListComponent } from '../recipe-list.component';
 
 @Component({
   selector: 'recipe-detail',

@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { ShopListService } from './shop-list/shop-list.service';
-import { AuthService } from './auth/auth.service';
-import { AuthGaurdService } from './auth/auth-gaurd.service';
 
 @Component({
   selector: 'app-root',

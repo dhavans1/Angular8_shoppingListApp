@@ -10,7 +10,7 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="cursor: pointer">
                 <li class="dropdown-item" (click)="addToShop(recipeDetail.ingredients)"><a>Add to Shop</a></li>
-                <li class="dropdown-item" (click)="editRecipe(recipeDetail)"><a>Edit Recipe</a></li>
+                <li class="dropdown-item" [routerLink]="['edit']"><a>Edit Recipe</a></li>
                 <li class="dropdown-item" (click)="deleteRecipe(recipeDetail)"><a>Delete Recipe</a></li>
             </ul>
         </div>
