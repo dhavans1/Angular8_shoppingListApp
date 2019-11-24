@@ -1,8 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import {recipe} from '../recipe/recipe.model';
 import { ingredient } from 'src/app/shared/ingredient.model';
 import { ShopListService } from 'src/app/shop-list/shop-list.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { recipeService } from '../recipe/recipe.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class recipeDetailComponent implements OnInit {
   constructor(
     private recipeServiceInstance: recipeService,
     private shoplistServiceInstance: ShopListService,
-    private route: ActivatedRoute ) { }
+    private route: ActivatedRoute,
+    private router: Router ) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -26,6 +29,12 @@ export class recipeDetailComponent implements OnInit {
           this.recipeDetail = this.recipeServiceInstance.getRecipe(+params.UID);
       }
   );
+
+    this.recipeServiceInstance.recipeListUpdatedSubject.subscribe(
+      (recipeList) => {
+        this.recipeDetail = this.recipeServiceInstance.getRecipe(this.recipeDetail.UID);
+      }
+    );
   }
 
   addToShop( ingredients: ingredient[] ) {
@@ -41,13 +50,10 @@ export class recipeDetailComponent implements OnInit {
     );
   }
 
-  editRecipe(recipeToEdit: recipe) {
-
-  }
-
   deleteRecipe(recipeToDelete: recipe) {
     if ( window.confirm('Delete this recipe?') ) {
       this.recipeServiceInstance.deleteRecipe(recipeToDelete.UID);
+      this.router.navigate(['recipes']);
     }
   }
 }

@@ -13,6 +13,22 @@
                         formControlName="name">
                 </div>
                 <div class="form-group">
+                    <label>Image URL</label>
+                    <input 
+                        class="form-control"
+                        type="text"
+                        formControlName="imageURL"
+                        (ngModelChange)="onImageURLChange()"
+                    />
+                </div>
+                <div class="form-group">
+                    <img 
+                    class="recipe-image img-responsive"
+                    [(src)]="tempImageURL" 
+                    alt="Recipe Image">
+                    <!-- src="recipeOb.imageURL === '' || undefined || null ? '' : recipeOb.imageURL" > -->
+                </div>
+                <div class="form-group">
                     <label for="">Description</label>
                     <input 
                         type="text" 
@@ -23,11 +39,11 @@
                 <div class="form-group">
                     <label for="">Ingredients</label>
                     <br><br>
-                    <button class="btn btn-secondary" (click)="addIngredient()">Add Ingregient</button>
+                    <button class="btn btn-secondary" type="button" (click)="addIngredient()">Add Ingregient</button>
                     <div 
                         formArrayName="ingredients"
                         *ngFor="let ingredient of getIngredientsControls(); let i = index">
-                        <div class="row" >
+                        <div class="row ingredient-div" >
                             <div [formGroupName]="i">                            
                             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">                                
                                 <label>Name</label>
@@ -35,17 +51,26 @@
                                     class="form-control"
                                     formControlName="ingName">
                             </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">                                
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">                                
                                 <label>Quantity</label>
                                 <input 
                                     class="form-control"
                                     formControlName="ingQuantity">
                             </div>
+                            <div class="class-xs-2 col-sm-2 col-md-2 col-lg-2 delete-icon-div">
+                                <button
+                                class="btn btn-danger"
+                                type="button"
+                                (click)="deleteIngredient(i)">
+                                <span class="glyphicon glyphicon-trash " aria-hidden="true"></span>
+                                </button>
+                            </div>
                         </div>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Save</button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
             </form>
         </div>
     </div>

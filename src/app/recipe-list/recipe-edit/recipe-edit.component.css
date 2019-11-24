@@ -1,0 +1,14 @@
+.recipe-image{
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.ingredient-div {
+    position: relative;
+}
+
+.delete-icon-div{
+    position: absolute;
+    bottom: 0;
+    right:0;
+}

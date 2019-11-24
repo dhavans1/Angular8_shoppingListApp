@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { recipeService } from '../recipe/recipe.service';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { recipe } from '../recipe/recipe.model'
 import { ingredient } from 'src/app/shared/ingredient.model';
 
@@ -17,7 +17,8 @@ export class RecipeEditComponent implements OnInit {
   ingredientsFormArray: FormArray;
   recipeOb: recipe;
   recipeUID: number;
-  constructor(private recipeSvcIns: recipeService, private activeRoute: ActivatedRoute) { }
+  tempImageURL: string; // temporary usage: to render image in the view
+  constructor(private recipeSvcIns: recipeService, private router: Router, private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.activeRoute.params.subscribe(
@@ -26,6 +27,7 @@ export class RecipeEditComponent implements OnInit {
           this.newRecipe = false;
           this.recipeOb = this.recipeSvcIns.getRecipe(+param.UID);
           this.recipeUID = this.recipeOb.UID;
+          this.tempImageURL = this.recipeOb.imageURL;
         }
       }
     );
@@ -40,9 +42,10 @@ export class RecipeEditComponent implements OnInit {
       this.recipeEditForm = new FormGroup({
         name : new FormControl(null, Validators.required),
         description: new FormControl(null, Validators.required),
-        image: new FormControl(null, Validators.required),
+        imageURL: new FormControl(null, Validators.required),
         ingredients: new FormArray([])
       });
+      this.tempImageURL = '';
     } else {
       let ingredientsFGArray: FormGroup[] = [];
       this.recipeOb.ingredients.forEach(
@@ -56,30 +59,28 @@ export class RecipeEditComponent implements OnInit {
       this.recipeEditForm = new FormGroup({
         name : new FormControl(this.recipeOb.name, Validators.required),
         description: new FormControl(this.recipeOb.description, Validators.required),
-        image: new FormControl(this.recipeOb.imageURL, Validators.required),
+        imageURL: new FormControl(this.recipeOb.imageURL, Validators.required),
         ingredients: new FormArray(ingredientsFGArray)
       });
     }
   }
 
   onSubmit() {
-    
     let ingList: ingredient[] = [];
     this.recipeEditForm.value.ingredients.forEach(
       (ing, index) => {
-        ingList.push(new ingredient(index, ing.ingName, '', ing.ingQuantity, true))
+        ingList.push(new ingredient(index, ing.ingName, '', ing.ingQuantity, true));
       }
     );
-    
     this.recipeOb = new recipe(
       this.recipeEditForm.value.name,
       this.recipeEditForm.value.description,
-      '',
+      this.recipeEditForm.value.imageURL,
       this.recipeUID,
       ingList
     );
-    console.log(this.recipeOb);
     this.recipeSvcIns.updateRecipe(this.recipeOb);
+    this.router.navigate(['recipes', this.recipeUID]);
   }
 
   addIngredient() {
@@ -96,4 +97,18 @@ export class RecipeEditComponent implements OnInit {
     return (this.recipeEditForm.get('ingredients') as FormArray).controls;
   }
 
+  onImageURLChange(){
+    this.tempImageURL = this.recipeEditForm.value.imageURL;
+  }
+
+  deleteIngredient(ingredientIDToDel: number){
+    // deleteIngredient() - Deletes ingredient and updates all references( master recipe list data source and recipe list view & recipe edit view)
+    // This approach is not required as we can do one final update once the user submits the form
+    // this.recipeSvcIns.deleteIngredient(this.recipeUID, ingredientIDToDel);
+    (this.recipeEditForm.get('ingredients') as FormArray).removeAt(ingredientIDToDel);
+  }
+
+  onCancel(){
+    this.router.navigate(['recipes', this.recipeUID]);
+  }
 }
