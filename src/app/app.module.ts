@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store'
 
 import { AppComponent } from './app.component';
 import { AppHeaderComponent } from './app-header/app-header.component';
@@ -20,6 +21,7 @@ import { AuthGaurdService } from './auth/auth-gaurd.service';
 import { CanDeactivateGaurd } from './app-header/can-deactivate-gaurd.service';
 import { RecipeEditComponent } from './recipe-list/recipe-edit/recipe-edit.component';
 import { RecipeEmptyComponent } from './recipe-list/recipe-empty/recipe-empty.component';
+// import { shopListReducer } from './shop-list/store/shop-list.reducer';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,8 @@ import { RecipeEmptyComponent } from './recipe-list/recipe-empty/recipe-empty.co
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRouter
+    AppRouter,
+    // StoreModule.forRoot({ shopList: shopListReducer })
   ],
   providers: [AuthService, AuthGaurdService, CanDeactivateGaurd],
   bootstrap: [AppComponent]

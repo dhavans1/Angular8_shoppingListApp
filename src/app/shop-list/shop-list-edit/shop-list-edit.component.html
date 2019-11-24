@@ -1,27 +1,56 @@
-<div class="row" style="margin:auto">
-    <div class="col-xs-12">
+<div class="row col-xs-12 rootContainer" style="margin:auto">
+    <div class="col-xs-6">
         <!-- Form for Ingredient Add, Delete and Clear -->
-        <form>
+        <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+            <div class="form-group">
+                <legend>{{editMode ? 'Add New ' : 'Edit '}} Shopping Item</legend>
+            </div>                
             <!-- Form Inputs -->
             <div class="row">
-                <div class="col-xs-4 form-group">
+                <div class="col-xs-6 form-group">
                     <label for="name">Name</label>
-                    <input type="text" name="ingredientInp" class="form-control" #itemNameInput/>
+                    <input 
+                        type="text" 
+                        name="ingredientInp" 
+                        ngModel
+                        required 
+                        class="form-control" />
                 </div>
-                <div class="col-xs-2 form-group">
+                <div class="col-xs-4 form-group">
                         <label for="quantity">Quantity</label>
-                        <input type="number" name="quantityInp" class="form-control" #itemQuantityInput/>
+                        <input 
+                            type="number" 
+                            name="quantityInp" 
+                            ngModel 
+                            required
+                            [pattern]="'[1-9]+[0-9]*'"
+                            class="form-control" />
                     </div>
             </div>
             <!-- Form buttons -->
             <div class="row">
-                <div class="col-xs-6">
-                        <button class="btn btn-group btn-success" type="submit" (click)="addItem()">Add</button>
-                        <button class="btn btn-group btn-danger"  type="button">Delete</button>
-                        <button class="btn btn-group btn-primary" type="reset">Clear</button>
+                <div class="col-xs-12">
+                        <button 
+                            class="btn btn-group btn-success" 
+                            [disabled]="f.invalid"
+                            type="submit">
+                            {{editMode ? 'Update' : 'Add'}}
+                        </button>
+                        <button 
+                            class="btn btn-group btn-danger"  
+                            type="button"
+                            *ngIf="editMode"
+                            (click)="onDelete()">
+                            Delete
+                        </button>
+                        <button 
+                            class="btn btn-group btn-primary" 
+                            type="button" 
+                            (click)="onClear()">
+                            Clear
+                        </button>
                 </div>
             </div>
-
         </form>
     </div>
 </div>

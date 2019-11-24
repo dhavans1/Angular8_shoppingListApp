@@ -20,9 +20,10 @@ export class shopListComponent implements OnInit, CanDeactivateGaurd{
         this.ingredientList = this.shoplistServiceInstance.getIngredients();
 
         //Observe/Subscribe/Listen to add event 
-        this.shoplistServiceInstance.addEvent.subscribe(
+        this.shoplistServiceInstance.ingListUpdated.subscribe(
             (ingredientList) => {
                 this.ingredientList = ingredientList;
+                console.log(this.ingredientList);
             }
         );
     }
@@ -34,6 +35,10 @@ export class shopListComponent implements OnInit, CanDeactivateGaurd{
         } else {
             return false;
         }
+    }
+
+    editItem(index: number){
+        this.shoplistServiceInstance.editItemSubject.next(index);
     }
 }
 

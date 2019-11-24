@@ -1,24 +1,30 @@
 <div class="row" style="margin:auto">
     <div class="xs-col-12">
-        <shop-list-item></shop-list-item>
+        <!-- <shop-list-item></shop-list-item>
         <hr />
-        
+         -->
         <!-- Shop list Edit -->
         <shop-list-edit ></shop-list-edit>
         <hr />
-        
+
         <!-- Shopping List -->
         <div class="col-xs-6">
-            <ul class="list-group clearfix">
-                <a class="list-group-item"
-                    *ngFor="let ingredient of ingredientList"
-                    style="cursor: pointer"
-                >
-                    <div style="display:inline-block;" class="xs-col-6">{{ingredient.name}}</div>
-                    {{ingredient.quantity}} {{ingredient.metric}}
-                    <input type="checkbox" value="{{ingredient.toBuy}}" checked="{{ingredient.toBuy}}"/>
-                </a>
-            </ul>
+            <div class="col-xs-12">
+                <p class="titleClass">Shopping List</p>
+            </div>
+            <div class="col-xs-12">
+                <ul class="list-group clearfix">
+                    <a class="list-group-item"
+                        *ngFor="let ingredient of ingredientList; let i = index"
+                        (click)="editItem(i)"
+                        style="cursor: pointer"
+                    >
+                        <div style="display:inline-block;" class="xs-col-6">{{ingredient.name}}</div>
+                        {{ingredient.quantity}} {{ingredient.metric}}
+                        <input type="checkbox" value="{{ingredient.toBuy}}" checked="{{ingredient.toBuy}}"/>
+                    </a>
+                </ul>
+            </div>
         </div>
     </div>    
 </div>
